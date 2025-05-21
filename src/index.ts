@@ -1,0 +1,31 @@
+// build task management system
+//2 classes user and task class
+//how to connect the two classes
+//user class has the user deatils(name, role, id)
+//task (creating, updating, delete, retrive)
+// admin has a role of assigning task to the users, unassign and the information
+// for th system to run role if the role is admin then display the create,update, delete, retrieve data options (both users and the tasks)
+//now it gives two options user details or tasks details(if its user option creating, deleting, updating,retrieve)
+//if its task(option creating, deleting, updating,retrieve) then assign 
+//when the assign method is called all users are displayed in the terminal
+
+class User{
+    name:string;
+    isAdmin:boolean;
+    userID:number;
+    constructor(name:string, isAdmin:boolean, userID:number){
+        this.name = name;
+        this.isAdmin = isAdmin;
+        this.userID = userID;
+    }
+    //create a function that will check the role of the user if the user is an isadmin then proceed to the function that includes CRUD opreation
+    checkAdmin() {
+        if(this.isAdmin === true){
+            console.log(`Welcome to Admin dashboard Mr.${this.name}`);
+
+            console.log(`You can choose between  the two number to either deal with user class or the task class`);
+            
+            
+        }
+    }
+}
