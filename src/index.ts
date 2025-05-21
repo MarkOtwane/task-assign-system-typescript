@@ -9,6 +9,10 @@
 //if its task(option creating, deleting, updating,retrieve) then assign 
 //when the assign method is called all users are displayed in the terminal
 
+
+// takes input from the user 
+import { log } from 'console';
+import * as readline from 'readline';
 class User{
     name:string;
     isAdmin:boolean;
@@ -24,10 +28,39 @@ class User{
             console.log(`Welcome to Admin dashboard Mr.${this.name}`);
 
             console.log(`You can choose between  the two number to either deal with user class or the task class`);
-            
-            
+            askUser()
         }
     }
+}
+
+// function StepNext(params:type) {
+    
+// }
+// function to get input from the user 
+function askUser(): void{
+    const rl = readline.createInterface({
+        input : process.stdin,
+        output: process.stdout
+    });
+    rl.question('Choose between number 1.Manipulating user data, 2.manipulating task data? ', (number) => {
+        // console.log(`Hello, ${name}`);
+        if(parseInt(number)===1){
+            // function to add user
+            console.log("Manipulate user data");
+        }
+        else if(parseInt(number)===2){
+            // funtion to manipulate the task
+            console.log("Manipulate the tasks");
+            
+        }
+        else{
+            console.log("you can only choose btn this two options");
+        }
+        rl.close();
+      });
+}
+class Task{
+
 }
 
 const admin = new User("Mark", true, 40918101);
