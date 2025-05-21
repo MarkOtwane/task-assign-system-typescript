@@ -51,7 +51,7 @@ function askUser(): void{
         else if(parseInt(number)===2){
             // funtion to manipulate the task
             console.log("Manipulate the tasks");
-            
+            crudOperation(1)
         }
         else{
             console.log("you can only choose btn this two options");
@@ -67,12 +67,46 @@ class Task{
 
     constructor(typeOfTask:string, taskPriority:string, dateToCompletion:Date, startDate:Date){
         this.typeOfTask = typeOfTask;
-        this.taskPriority = taskPriority;
+        this.taskPriority = taskPriority;                           
         this.dateToCompletion = dateToCompletion;
         this.startDate = startDate
+    }
+    // let task = []
+    createTask(){
+        console.log(`Enter the ${this.typeOfTask}, ${this.taskPriority}, ${this.dateToCompletion}, ${this.startDate}`);
+
+        //save this data in an array
+    }
+    update(){
+        //edits the entered data in an array then it saves
+    }
+    retrieve(){
+        //gets the user data like it displays all the information in an array
+    }
+
+    delete(){
+        //deletes an element in an array
     }
     
 }
 
-const admin = new User("Mark", true, 40918101);
+function crudOperation(num: number){
+    if (num===1){
+        task.createTask()
+    }
+    else if(num===2){
+        task.update()
+    }
+    else if(num===3){
+        task.retrieve()
+    }
+    else if(num===4){
+        task.delete()
+    }
+        
+}
+
+const admin =new User("Mark", true, 418101);
 console.log(admin.checkAdmin());
+
+const task = new Task("Cooding", "high", new Date, new Date);
