@@ -60,7 +60,18 @@ function askUser(): void{
       });
 }
 class Task{
+    typeOfTask:string;
+    taskPriority: string;
+    dateToCompletion: Date;
+    startDate:Date;
 
+    constructor(typeOfTask:string, taskPriority:string, dateToCompletion:Date, startDate:Date){
+        this.typeOfTask = typeOfTask;
+        this.taskPriority = taskPriority;
+        this.dateToCompletion = dateToCompletion;
+        this.startDate = startDate
+    }
+    
 }
 
 const admin = new User("Mark", true, 40918101);
