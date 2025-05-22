@@ -47,6 +47,7 @@ function askUser(): void{
         if(parseInt(number)===1){
             // function to add user
             console.log("Manipulate user data");
+            task.createTask()
         }
         else if(parseInt(number)===2){
             // funtion to manipulate the task
