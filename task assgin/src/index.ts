@@ -7,10 +7,11 @@ const allowInput = readline.createInterface({
 
 let users: User[] = [];
 let tasks : Task[] = [];
+// let taskAssigned : TaskAssignment[] = [];
 
 class User{
     name: string;
-    isAdmin:boolean;
+    isAdmin:true | false; //literals says that theis is onlyn two option 
     userId:number;
     constructor(name:string, isAdmin:boolean, userId:number){
         this.name = name;
@@ -38,7 +39,16 @@ class User{
         allowInput.question('choose the options available', (number)=>{
             if(parseInt(number)===1){
                 console.log("create a user");
-                
+                //create a function to create a user
+                allowInput.question("Enter use details", (userInput)=>{
+                    const [name, userId, isAdmin] = userInput.split(',') //splits input into parts
+                    const user = new User(name, isAdmin === "true", parseInt(userId))
+                    users.push(user);
+                    console.log(user);
+                    
+                    allowInput.close();
+
+                }) 
             }
             else if (parseInt(number)===2){
                 console.log("update user");
@@ -62,21 +72,32 @@ class User{
 
 class Task{
     typeOfTask:string;
-    taskPriority: string;
+    taskPriority: 'high'| 'low' | 'medium';
+    taskId: number;
     dateToCompletion: Date;
     startDate:Date;
 
-    constructor(typeOfTask:string, taskPriority:string, dateToCompletion:Date, startDate:Date){
+    constructor(typeOfTask:string, taskPriority: 'high'| 'low' | 'medium', dateToCompletion:Date, startDate:Date, taskId:number){
         this.typeOfTask = typeOfTask;
         this.taskPriority = taskPriority;                           
         this.dateToCompletion = dateToCompletion;
-        this.startDate = startDate
+        this.startDate = startDate;
+        this.taskId = taskId
     }
     manipulateTasks(){
         console.log('options: 1. create, 2. update, 3. retrieve, 4. delete');
         allowInput.question('choose the options available', (number)=>{
             if(parseInt(number)===1){
                 console.log("create a Tasks");
+                allowInput.question("Enter task details", (userInput)=>{
+                    const [typeOfTask,taskPriority, dateToCompletion, startDate, taskId] = userInput.split(',') //splits input into parts
+                    const task = new Task(typeOfTask, taskPriority as 'high' | 'low' | 'medium', new Date(dateToCompletion), new Date(startDate), parseInt(taskId))
+                    tasks.push(task);
+                    console.log(task);
+                    
+                    allowInput.close();
+
+                }) 
                 
             }
             else if (parseInt(number)===2){
@@ -98,6 +119,6 @@ class Task{
     }
 }
 
+
 const admin = new User("Mark", true, 123456789);
-console.log(admin.mainActivities())
 // cons task = new Task()

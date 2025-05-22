@@ -40,6 +40,7 @@ const allowInput = readline.createInterface({
 });
 let users = [];
 let tasks = [];
+// let taskAssigned : TaskAssignment[] = [];
 class User {
     constructor(name, isAdmin, userId) {
         this.name = name;
@@ -58,6 +59,7 @@ class User {
                 console.log('Wrong option!! choose option 1 or 2');
                 this.mainActivities();
             }
+            allowInput.close();
         });
     }
     // function to perform CRUD operation
@@ -66,6 +68,14 @@ class User {
         allowInput.question('choose the options available', (number) => {
             if (parseInt(number) === 1) {
                 console.log("create a user");
+                //create a function to create a user
+                allowInput.question("Enter use details", (userInput) => {
+                    const [name, userId, isAdmin] = userInput.split(','); //splits input into parts
+                    const user = new User(name, isAdmin === "true", parseInt(userId));
+                    users.push(user);
+                    console.log(user);
+                    allowInput.close();
+                });
             }
             else if (parseInt(number) === 2) {
                 console.log("update user");
@@ -80,21 +90,30 @@ class User {
                 console.log("choose between the options");
                 this.manipulateUser();
             }
+            allowInput.close();
         });
     }
 }
 class Task {
-    constructor(typeOfTask, taskPriority, dateToCompletion, startDate) {
+    constructor(typeOfTask, taskPriority, dateToCompletion, startDate, taskId) {
         this.typeOfTask = typeOfTask;
         this.taskPriority = taskPriority;
         this.dateToCompletion = dateToCompletion;
         this.startDate = startDate;
+        this.taskId = taskId;
     }
     manipulateTasks() {
         console.log('options: 1. create, 2. update, 3. retrieve, 4. delete');
         allowInput.question('choose the options available', (number) => {
             if (parseInt(number) === 1) {
                 console.log("create a Tasks");
+                allowInput.question("Enter task details", (userInput) => {
+                    const [typeOfTask, taskPriority, dateToCompletion, startDate, taskId] = userInput.split(','); //splits input into parts
+                    const task = new Task(typeOfTask, taskPriority, new Date(dateToCompletion), new Date(startDate), parseInt(taskId));
+                    tasks.push(task);
+                    console.log(task);
+                    allowInput.close();
+                });
             }
             else if (parseInt(number) === 2) {
                 console.log("update Tasks");
@@ -109,9 +128,9 @@ class Task {
                 console.log("Option does not exit !! choose between the options");
                 this.manipulateTasks();
             }
+            allowInput.close();
         });
     }
 }
 const admin = new User("Mark", true, 123456789);
-console.log(admin.mainActivities());
 // cons task = new Task()
