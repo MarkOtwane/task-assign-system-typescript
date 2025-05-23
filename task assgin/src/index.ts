@@ -73,8 +73,8 @@ class User{
                     }
                 }
                   
-                DeleteElement(tasks);
-                console.log(tasks);
+                DeleteElement(users);
+                console.log(users);
                   
                   
             }

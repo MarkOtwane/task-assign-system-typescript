@@ -97,8 +97,8 @@ class User {
                         tasks.splice(index, 1);
                     }
                 }
-                DeleteElement(tasks);
-                console.log(tasks);
+                DeleteElement(users);
+                console.log(users);
             }
             else {
                 console.log("choose between the options");
