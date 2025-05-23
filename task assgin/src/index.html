@@ -7,13 +7,13 @@
 </head>
 <body>
 
-     <form action="">
+    <form action="">
         <input type="text" id="adminLogin" placeholder="Enter user Credential" required>
         <input type="text" id="checkAdmin" placeholder="Enter true or false">
         <input type="number" placeholder="UserId Number" id="idNum">
-        <button>Create User</button>
-     </form>
-     <table class="mainUsers">
+        <button id="createUser">Create User</button>
+    </form>
+    <table class="mainUsers">
         <thead>
             <tr>
                 <th>Name</th>
@@ -22,8 +22,63 @@
                 <th>Action Taken</th>
             </tr>
         </thead>
-        <tbody></tbody>
-     </table>
+        <tbody>
+            <!-- button delete and update users in the action section -->
+        </tbody>
+    </table>
+
+    <form action="">
+        <input type="text" placeholder="Enter the type of task" id = "taskType" required>
+        <input type="text" placeholder="Enter the task Priority (high | low | medium)"  id = "taskPriority"required>
+        <input type="number" placeholder="Enter the task Id " id="taskID" required>
+        <input type="date" placeholder="Enter the date of completion" id="CompleteTask" required>
+        <input type="date" placeholder="Enter th starting date" id="StartTask" required>
+        <button id="createTaks">Create Task</button>
+    </form>
+
+    <table class="tasksData">
+        <thead>
+            <tr>
+                <!-- typeOfTask:string;
+                taskPriority: 'high'| 'low' | 'medium';
+                taskId: number;
+                dateToCompletion: Date;
+                startDate:Date; -->
+                <th>Type of Task</th>
+                <th>Task Priority</th>
+                <th>TaskId</th>
+                <th>Date of Completion</th>
+                <th>Start Date</th>
+                <th>Action</th>   
+            </tr>
+        </thead>
+        <tbody>
+            <!-- on the action part it should have buttons working for delete and updeate tasks -->
+        </tbody>
+    </table>
+
+     <!-- Assign user to a task -->
+    <form action="">
+        <input type="number" placeholder="Enter User Id" id="UserID">
+        <input type="number" placeholder="Enter Task Id" id="taskID">
+        <button id="assignTask">Assign User a Task</button>
+      </form>
+      <table class="taskAssign">
+        <thead>
+            <tr>
+                <th>Name Of The User</th>
+                <th>User Id</th>
+                <th>Task Assigned</th>
+                <th>Priority of the Task</th>
+                <th>Date of completion</th>
+                
+            </tr>
+    </thead>
+        <tbody>
+            <!-- it should have the button t unassign users to task -->
+                 <!--  button to retrieve tasks assigned and unassigned-->
+        </tbody>
+      </table>
     <script src="../dist/script.js"></script>
 </body>
 </html>

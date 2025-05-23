@@ -7,44 +7,108 @@ class User {
     }
 }
 class Task {
-    constructor(typeOfTask, taskPriority, dateToCompletion, startDate, taskId) {
+    constructor(typeOfTask, taskPriority, taskId, dateToCompletion, startDate) {
         this.typeOfTask = typeOfTask;
         this.taskPriority = taskPriority;
+        this.taskId = taskId;
         this.dateToCompletion = dateToCompletion;
         this.startDate = startDate;
+    }
+}
+class TaskAssignment {
+    constructor(userId, taskId) {
+        this.userId = userId;
         this.taskId = taskId;
     }
 }
 let users = [];
 let tasks = [];
-const form = document.querySelector('form');
-const userTable = document.querySelector('.mainUsers tbody');
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const nameInput = document.getElementById('adminLogin');
-    const isAdminInput = document.getElementById('checkAdmin');
-    const userIdInput = document.getElementById('idNum');
-    const name = nameInput.value.trim();
-    const isAdmin = isAdminInput.value.trim().toLowerCase() === 'true';
-    const userId = parseInt(userIdInput.value);
-    const user = new User(name, isAdmin, userId);
-    users.push(user);
-    addUser(user);
-    form.reset();
-});
-function addUser(user) {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-        <td>${user.name}</td>
-        <td>${user.isAdmin ? 'Admin' : 'User'}</td>
-        <td>${user.userId}</td>
-        <td><button class="deleteBtn">Delete</button></td>
-        <td><button class= "editBtn">Edit</button></td>
-    `;
-    const deleteBtn = row.querySelector('.deleteBtn');
-    deleteBtn.addEventListener('click', () => {
-        users = users.filter(u => u.userId !== user.userId);
-        row.remove();
+let taskAssignments = [];
+const userTable = document.querySelector(".mainUsers tbody");
+const taskTable = document.querySelector(".tasksData tbody");
+const assignmentTable = document.querySelector(".taskAssign tbody");
+// DOM Helpers
+function getUsers() {
+    userTable.innerHTML = '';
+    users.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.isAdmin}</td>
+            <td>${user.userId}</td>
+            <td><button onclick="deleteUser(${user.userId})">Delete</button></td>
+        `;
+        userTable.appendChild(row);
     });
-    userTable.appendChild(row);
 }
+function createTasks() {
+    taskTable.innerHTML = '';
+    tasks.forEach(task => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${task.typeOfTask}</td>
+            <td>${task.taskPriority}</td>
+            <td>${task.taskId}</td>
+            <td>${task.dateToCompletion.toDateString()}</td>
+            <td>${task.startDate.toDateString()}</td>
+            <td><button onclick="deleteTask(${task.taskId})">Delete</button></td>
+        `;
+        taskTable.appendChild(row);
+    });
+}
+function assignTasksToUsers() {
+    assignmentTable.innerHTML = '';
+    taskAssignments.forEach(assignment => {
+        const user = users.find(u => u.userId === assignment.userId);
+        const task = tasks.find(t => t.taskId === assignment.taskId);
+        if (user && task) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${user.name}</td>
+                <td>${user.userId}</td>
+                <td>${task.typeOfTask}</td>
+                <td>${task.taskPriority}</td>
+                <td>${task.dateToCompletion.toDateString()}</td>
+            `;
+            assignmentTable.appendChild(row);
+        }
+    });
+}
+// dele with buttons
+document.getElementById("createUser").addEventListener("click", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("adminLogin").value;
+    const isAdmin = document.getElementById("checkAdmin").value === "true";
+    const userId = parseInt(document.getElementById("idNum").value);
+    const newUser = new User(name, isAdmin, userId);
+    users.push(newUser);
+    getUsers();
+});
+document.getElementById("createTaks").addEventListener("click", (e) => {
+    e.preventDefault();
+    const type = document.getElementById("taskType").value;
+    const priority = document.getElementById("taskPriority").value;
+    const id = parseInt(document.getElementById("taskID").value);
+    const complete = new Date(document.getElementById("CompleteTask").value);
+    const start = new Date(document.getElementById("StartTask").value);
+    const task = new Task(type, priority, id, complete, start);
+    tasks.push(task);
+    createTasks();
+});
+document.getElementById("assignTask").addEventListener("click", (e) => {
+    e.preventDefault();
+    const userId = parseInt(document.getElementById("UserID").value);
+    const taskId = parseInt(document.querySelector("form:nth-of-type(3) #taskID").value);
+    const assign = new TaskAssignment(userId, taskId);
+    taskAssignments.push(assign);
+    assignTasksToUsers();
+});
+// function  to delkete users 
+window.deleteUser = (userId) => {
+    users = users.filter(u => u.userId !== userId);
+    getUsers();
+};
+window.deleteTask = (taskId) => {
+    tasks = tasks.filter(t => t.taskId !== taskId);
+    createTasks();
+};

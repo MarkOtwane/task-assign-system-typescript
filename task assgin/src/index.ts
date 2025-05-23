@@ -5,7 +5,7 @@ const allowInput = readline.createInterface({
     output:process.stdout
 });
 
-const userTable = document.querySelector(".mainUsers tbody") as HTMLBodyElement
+// const userTable = document.querySelector(".mainUsers tbody") as HTMLBodyElement
 
 let users: User[] = [];
 let tasks : Task[] = [];
@@ -84,32 +84,6 @@ class User{
             }
             allowInput.close()
         });
-        tasks.forEach((task) =>{
-            const row = document.createElement('tr')
-
-            const taskType = document.createElement('td')
-            taskType.textContent = task.typeOfTask;
-
-            const priorityTask = document.createElement('td')
-            priorityTask.textContent = task.taskPriority;
-
-            const dateCompleted = document.createElement('td')
-            dateCompleted.textContent = task.dateToCompletion.toDateString();
-
-            const startDateTask = document.createElement('td')
-            startDateTask.textContent = task.startDate.toDateString();
-
-            const taskID = document.createElement('td')
-            taskID.textContent = task.taskId.toString();
-            
-            row.appendChild(taskType);
-            row.appendChild(priorityTask);
-            row.appendChild(dateCompleted);
-            row.appendChild(startDateTask);
-            row.appendChild(taskID);
-
-            userTable.appendChild(row)
-        })
         
     }
 
