@@ -38,6 +38,7 @@ const allowInput = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+const userTable = document.querySelector(".mainUsers tbody");
 let users = [];
 let tasks = [];
 // let taskAssigned : TaskAssignment[] = [];
@@ -48,9 +49,9 @@ class User {
         this.userId = userId;
     }
     mainActivities() {
-        allowInput.question('Choose as option: 1 access user data 2.Access task data', (number) => {
+        allowInput.question('Choose as option: 1 access user data 2.Access task data : ', (number) => {
             if (parseInt(number) === 1) {
-                admin.manipulateUser();
+                this.manipulateUser();
             }
             else if (parseInt(number)) {
                 // task.manupilateTasks();
@@ -65,7 +66,7 @@ class User {
     // function to perform CRUD operation
     manipulateUser() {
         console.log('options: 1. create, 2. update, 3. retrieve, 4. delete');
-        allowInput.question('choose the options available', (number) => {
+        allowInput.question('choose the options available : ', (number) => {
             if (parseInt(number) === 1) {
                 console.log("create a user");
                 //create a function to create a user
@@ -82,15 +83,47 @@ class User {
             }
             else if (parseInt(number) === 3) {
                 console.log("get users");
+                function getAllUsers(tasks) {
+                    return tasks;
+                }
+                console.log(getAllUsers(tasks));
             }
             else if (parseInt(number) === 4) {
                 console.log("delete a user");
+                // delete users 
+                function DeleteElement(tasks, value) {
+                    const index = tasks.indexOf(value);
+                    if (index !== -1) {
+                        tasks.splice(index, 1);
+                    }
+                }
+                DeleteElement(tasks);
+                console.log(tasks);
             }
             else {
                 console.log("choose between the options");
                 this.manipulateUser();
             }
             allowInput.close();
+        });
+        tasks.forEach((task) => {
+            const row = document.createElement('tr');
+            const taskType = document.createElement('td');
+            taskType.textContent = task.typeOfTask;
+            const priorityTask = document.createElement('td');
+            priorityTask.textContent = task.taskPriority;
+            const dateCompleted = document.createElement('td');
+            dateCompleted.textContent = task.dateToCompletion.toDateString();
+            const startDateTask = document.createElement('td');
+            startDateTask.textContent = task.startDate.toDateString();
+            const taskID = document.createElement('td');
+            taskID.textContent = task.taskId.toString();
+            row.appendChild(taskType);
+            row.appendChild(priorityTask);
+            row.appendChild(dateCompleted);
+            row.appendChild(startDateTask);
+            row.appendChild(taskID);
+            userTable.appendChild(row);
         });
     }
 }
@@ -104,19 +137,19 @@ class Task {
     }
     manipulateTasks() {
         console.log('options: 1. create, 2. update, 3. retrieve, 4. delete');
-        allowInput.question('choose the options available', (number) => {
+        allowInput.question('choose the options available : ', (number) => {
             if (parseInt(number) === 1) {
-                console.log("create a Tasks");
-                allowInput.question("Enter task details", (userInput) => {
+                console.log("create a Tasks", allowInput.question("Enter task details", (userInput) => {
                     const [typeOfTask, taskPriority, dateToCompletion, startDate, taskId] = userInput.split(','); //splits input into parts
                     const task = new Task(typeOfTask, taskPriority, new Date(dateToCompletion), new Date(startDate), parseInt(taskId));
                     tasks.push(task);
                     console.log(task);
                     allowInput.close();
-                });
+                }));
             }
             else if (parseInt(number) === 2) {
                 console.log("update Tasks");
+                // function to edit elements created in an array 
             }
             else if (parseInt(number) === 3) {
                 console.log("get Tasks");
@@ -132,5 +165,8 @@ class Task {
         });
     }
 }
-const admin = new User("Mark", true, 123456789);
-// cons task = new Task()
+allowInput.question("Enter admin details (name,isAdmin,userId): ", (adminInput) => {
+    const [name, isAdmin, userId] = adminInput.split(',');
+    const admin = new User(name, isAdmin === "true", parseInt(userId));
+    admin.mainActivities();
+});
